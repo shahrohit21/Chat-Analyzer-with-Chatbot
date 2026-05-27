@@ -6,14 +6,15 @@ def preprocess(data):
     # Standardize the date parsing formats to remove narrow non-breaking spaces
     data = data.replace('\u202f', ' ')
     
-    pattern = r'\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}\s*[aApP][mM]'
+    # Pattern to match 12-hour, 24-hour, and bracketed iOS timestamps
+    pattern = r'\[?\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}(?::\d{2})?(?:\s*[aApP][mM])?\]?'
     
     # Extract messages and times
     message = re.split(pattern, data)[1:]
     time = re.findall(pattern, data)
 
-    # In case there are trailing/leading differences, strip and upper the times
-    time = [t.upper() for t in time]
+    # Clean brackets and standardise case
+    time = [t.replace('[', '').replace(']', '').strip().upper() for t in time]
     
     if len(message) != len(time):
         # Fallback if there's any mismatch (though rare if regex perfectly splits)

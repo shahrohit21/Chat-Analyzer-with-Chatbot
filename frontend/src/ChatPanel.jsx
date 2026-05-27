@@ -61,7 +61,17 @@ function formatMarkdown(text) {
   });
 }
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
+const getApiBase = () => {
+  if (import.meta.env.VITE_API_BASE_URL) {
+    return import.meta.env.VITE_API_BASE_URL;
+  }
+  if (window.location.hostname === 'whatsapp-chat-anlayzer.onrender.com') {
+    return 'https://chat-analyzer-with-chatbot.onrender.com/api';
+  }
+  return 'http://localhost:8000/api';
+};
+
+const API_BASE = getApiBase();
 
 const SUGGESTIONS = [
   "Who is the most active user?",
