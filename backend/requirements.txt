@@ -1,0 +1,15 @@
+pandas
+numpy
+urlextract
+wordcloud
+emoji
+nltk
+python-multipart
+fastapi
+uvicorn
+pydantic
+reportlab
+google-genai
+matplotlib
+seaborn
+plotly
